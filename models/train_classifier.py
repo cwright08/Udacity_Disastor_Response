@@ -10,7 +10,6 @@ from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 
 from sklearn.multioutput import MultiOutputClassifier
-from sklearn.neighbors import KNeighborsClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import train_test_split
@@ -22,7 +21,7 @@ import pickle
 
 
 def load_data(database_filepath):
-    '''Load data from SQL lite DB
+    '''Load data from SQL lite DB and create features and target dataframes
     
     INPUT: 
     database_filepath - path to database 
@@ -32,8 +31,8 @@ def load_data(database_filepath):
     '''
 
     # load data from database
-    location = 'sqlite:///' + database_filepath
-    engine = create_engine(location)
+    file_location = 'sqlite:///' + database_filepath
+    engine = create_engine(file_location)
     df = pd.read_sql_table('Disastor_Recovery',engine)
 
     X = df['message'] #feature 
@@ -65,43 +64,47 @@ def tokenize(text):
 def build_model():
     ''' build out model using grid search and pipeline    
     INPUT: 
-    [none]
+    [NONE]
 
     OUTPUT: 
-    cv = grid searched model.   
+    cv = grid searcch model.   
     '''
 # build out pipeline
     pipeline = Pipeline([('vect', CountVectorizer(tokenizer=tokenize)),
                      ('tfidf', TfidfTransformer()),
                      ('clf',MultiOutputClassifier(RandomForestClassifier(random_state=1)))
                     ])
-    parameters =  {'clf__estimator__n_estimators': [10,20,30]
-    }
+    # parameters =  {'clf__estimator__n_estimators': [1,2]}                
+    parameters =  {'clf__estimator__n_estimators': [10,25,50], 
+    'clf__estimator__criterion': ['gini','Entropy'] 
+    } #tune on number of trees and split criteria. 
 
-    cv = GridSearchCV(pipeline, parameters)
+    cv = GridSearchCV(pipeline, parameters, verbose=3)
     return cv 
 
 
 def evaluate_model(model, X_test, Y_test, y_labels):
-    ''' build out model using grid search and pipeline 
+    ''' Build out model using grid search and pipeline, evaluate performance of the model. 
     
     INPUT: 
-    
+    model = trainied model
+    X_test = testing set features
+    Y_test = testing set targets
+    y_labels = target column labels
 
     OUTPUT: 
+    Tuned model report. 
       
     '''
-    
     # Predict results using the newly optimised parameters 
     y_pred_rev = model.predict(X_test)
-    y_pred__rev_df = pd.DataFrame(y_pred_rev, columns = y_labels)
+    y_pred_rev_df = pd.DataFrame(y_pred_rev, columns = y_labels)
 
     #Look for accuracy
-    for ind, columns in enumerate(Y.columns): 
+    for ind, columns in enumerate(y_pred_rev_df.columns): 
         print(columns)
-        print(classification_report(Y_test.iloc[:,ind], y_pred_df.iloc[:,ind]))
-    
-    return 
+        print(classification_report(Y_test.iloc[:,ind], y_pred_rev_df.iloc[:,ind]))
+    pass 
 
 
 def save_model(model, model_filepath):
@@ -125,7 +128,9 @@ def main():
         
         print('Training model...')
         model.fit(X_train, Y_train)
-        
+        para_selected = model.best_params_
+        print("Best Parameters Are" + str(para_selected))
+
         print('Evaluating model...')
         evaluate_model(model, X_test, Y_test, category_names)
 
@@ -133,6 +138,7 @@ def main():
         save_model(model, model_filepath)
 
         print('Trained model saved!')
+
 
     else:
         print('Please provide the filepath of the disaster messages database '\

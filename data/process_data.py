@@ -32,12 +32,22 @@ def clean_data(df):
     row = categories.iloc[1]
     category_colnames = list(map(lambda x:x.split('-')[0] , row))
     categories.columns = category_colnames
+
+    #isolate value only
     for column in categories:
         categories[column] = categories[column].apply(lambda x: x[-1])
         categories[column] = pd.to_numeric(categories[column])
+    
+    #drop original categories column 
     df.drop('categories',axis=1,inplace=True)
+
+    # concatonate revised categories back to orginal df
     df2 =  pd.concat([df,categories],axis=1)
     df2.drop_duplicates(inplace=True)
+    print(df2['related'].unique())
+    # Remove 2 values from the 'Related' column
+    df2['related'] = df2['related'].replace(2,1)
+    print(df2['related'].unique())
     return df2
 
 #function to save data to new SQL lite DB
