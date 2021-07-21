@@ -29,8 +29,7 @@ engine = create_engine('sqlite:///../data/DisasterResponse.db')
 df = pd.read_sql_table('Disastor_Recovery', engine)
 
 # load model
-model = joblib.load("../models/classifier.pkl")
-
+model = joblib.load("../MCC_Model.pkl")
 
 # index webpage displays cool visuals and receives user input text for model
 @app.route('/')
@@ -38,13 +37,29 @@ model = joblib.load("../models/classifier.pkl")
 def index():
     
     # extract data needed for visuals
-    # TODO: Below is an example - modify to extract data for your own visuals
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
+
+    #track number of entries for each category
+    #lists to hold variables
+    cat =[]
+    positive_ents = [] 
+    total_rows = df.shape[0]
+
+    #loop to find number of positive entries
+    for column_name in df.iloc[:,4:].columns:
+        entry = df[column_name][df[column_name]==1].shape[0]
+        cat.append(column_name)
+        positive_ents.append(entry)
+        pass
+
+
+
     
     # create visuals
     # TODO: Below is an example - modify to create your own visuals
     graphs = [
+        #First Graph
         {
             'data': [
                 Bar(
@@ -63,6 +78,26 @@ def index():
                 }
             }
         }
+        ,
+        #Second Graph
+         {
+            'data': [
+                Bar(
+                    x=cat,
+                    y=positive_ents
+                )
+            ],
+
+            'layout': {
+                'title': 'Categories Analysis',
+                'yaxis': {
+                    'title': "Count"
+                },
+                'xaxis': {
+                    'title': "Category"
+                }
+            }
+        }
     ]
     
     # encode plotly graphs in JSON
@@ -70,7 +105,7 @@ def index():
     graphJSON = json.dumps(graphs, cls=plotly.utils.PlotlyJSONEncoder)
     
     # render web page with plotly graphs
-    return render_template('master.html', ids=ids, graphJSON=graphJSON)
+    return render_template('master.html', ids=ids, graphJSON=graphJSON, genrenames=genre_names,total_rows=total_rows )
 
 
 # web page that handles user query and displays model results

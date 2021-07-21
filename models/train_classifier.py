@@ -76,8 +76,10 @@ def build_model():
                     ])
     # parameters =  {'clf__estimator__n_estimators': [1,2]}                
     parameters =  {'clf__estimator__n_estimators': [10,25,50], 
-    'clf__estimator__criterion': ['gini','Entropy'] 
+    'clf__estimator__criterion': ['gini','entropy'] 
     } #tune on number of trees and split criteria. 
+
+# Best Parameters Are{'clf__estimator__criterion': 'gini', 'clf__estimator__n_estimators': 50}
 
     cv = GridSearchCV(pipeline, parameters, verbose=3)
     return cv 

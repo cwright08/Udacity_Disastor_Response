@@ -22,7 +22,18 @@ Respository for Disastor Response machine learning pipleine and interactive dash
 
 
 ### Respository Guide
-
+-app
+    --run.py
+    --templates
+        --go.html
+        --master.html
+-data
+    --disaster_categories.csv
+    --disaster_messages.csv
+    --DisasterResponse.db
+    --process_data.py
+-models
+    --train_classifier.py
 
 ### Acknowledgements & Citations: 
 This project is built using templates provided by Udacity for their Data Science Nanodegree and code from the lesson 'Data Engineering' is used extensively throughout. 
@@ -36,3 +47,6 @@ All data courtesy of Figure Eight (https://www.linkedin.com/company/figureeight/
 - SckitLearn
 - NLTK
 - Flask
+- Plotly
+
+### Website Screenshot
