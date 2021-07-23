@@ -52,4 +52,4 @@ All data courtesy of Figure Eight (https://www.linkedin.com/company/figureeight/
 - Plotly
 
 ### Website Screenshot
-![webscreenshot](https://github.com/cwright08/Udacity_Disastor_Response/Webscreenshot.jpg?raw=true)
+![webscreenshot](Webscreenshot.jpg?raw=true)
