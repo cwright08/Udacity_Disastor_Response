@@ -1,8 +1,8 @@
 # Disaster Response Pipeline Project
-Respository for Disastor Response machine learning pipleine and interactive dashboard site, compelted as part of Udacity Nanodegree in Data Science using real world data provided by Figure8. 
+Respository for Disastor Response machine learning pipleine and interactive dashboard site, completed as part of Udacity Nanodegree in Data Science using real world data provided by Figure8. 
 
 ### Project Description & Motivation 
-This project aimed to demonstrate how natural language processing and machine learning can be used to classify messages which are recieved in a disastor event using Python. Using real world, pre-classified data, a working web app was successfully created. 
+This project aimed to demonstrate how natural language processing and machine learning can be used to classify messages which are recieved in a disastor event using Python. Using real world, pre-classified data, a working web app was successfully created. The same approach could be used to classify messages in other scenarios, such as customer service. 
 
 ### User instructions 
 1. In the project's root directory run the following commands.
