@@ -25,7 +25,7 @@ def tokenize(text):
     return clean_tokens
 
 # load data
-engine = create_engine('sqlite:///../data/DisasterResponse.db')
+engine = create_engine('sqlite:///..//data//DisasterResponse.db')
 df = pd.read_sql_table('Disastor_Recovery', engine)
 
 # load model
@@ -52,12 +52,8 @@ def index():
         cat.append(column_name)
         positive_ents.append(entry)
         pass
-
-
-
-    
+   
     # create visuals
-    # TODO: Below is an example - modify to create your own visuals
     graphs = [
         #First Graph
         {

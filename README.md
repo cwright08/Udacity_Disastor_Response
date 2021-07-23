@@ -2,7 +2,7 @@
 Respository for Disastor Response machine learning pipleine and interactive dashboard site, compelted as part of Udacity Nanodegree in Data Science using real world data provided by Figure8. 
 
 ### Project Description & Motivation 
-
+This project aimed to demonstrate how natural language processing and machine learning can be used to classify messages which are recieved in a disastor event using Python. Using real world, pre-classified data, a working web app was successfully created. 
 
 ### User instructions 
 1. In the project's root directory run the following commands.
@@ -17,22 +17,24 @@ Respository for Disastor Response machine learning pipleine and interactive dash
 
 3. Go to http://0.0.0.0:3001/ on your machine the view results 
 
-### Sample Image ### 
-![alt text](https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true)
+### Observations and Conclusions
+The project succesfully demonstrates the principles of how a natural language and machine learning model can be used to classify text. 
+
+The project uses a fairly simple Multiclassifier model with Random Forests. This was selected after a period of research which included implementing a K-Nearest Neighbor classifier and showed fairly good performance when evaluating metrics. One problem which was clear after initial data exploration is the lack of repsonses for certain features, making it hard or impossible for models to predict the outcome for these when deploy.Further, given additional time it would be very useful to test various other models such as neural networks and more advanced NLTK methods to seek to improve performance. 
 
 
 ### Respository Guide
--app
+-app = files to be used to run the web app.
     --run.py
     --templates
         --go.html
         --master.html
--data
+-data = raw data, and processing files.
     --disaster_categories.csv
     --disaster_messages.csv
     --DisasterResponse.db
     --process_data.py
--models
+-models - machine learning model classifier script. 
     --train_classifier.py
 
 ### Acknowledgements & Citations: 
@@ -50,3 +52,4 @@ All data courtesy of Figure Eight (https://www.linkedin.com/company/figureeight/
 - Plotly
 
 ### Website Screenshot
+![webscreenshot](https://github.com/cwright08/Udacity_Disastor_Response/Webscreenshot.PNG?raw=true)
