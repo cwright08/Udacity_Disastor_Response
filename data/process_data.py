@@ -61,7 +61,7 @@ def save_data(df2, database_filename):
     SQl database containing cleansed data.  
     '''
     engine = create_engine('sqlite:///' + database_filename)
-    df2.to_sql('Disastor_Recovery', engine, index=False)
+    df2.to_sql('Disastor_Recovery', engine, index=False, if_exists = 'replace')
     pass  
 
 
